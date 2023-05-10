@@ -1,0 +1,58 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ldm-rcs-config
+  namespace: {{ .Release.Namespace }}
+data:
+  dbbase_config.xml: |-
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <Config>
+    	<Encoding>UTF8</Encoding>
+    	<DbType>database_type::DB_MYSQL_TYPE</DbType>
+    	<ServerIP>{{ .Values.config.mysql.host }}</ServerIP>
+    	<Port>{{ .Values.config.mysql.port }}</Port>
+    	<DbName>{{ .Values.config.mysql.db }}</DbName>
+    	<UserName>{{ .Values.config.mysql.username }}</UserName>
+    	<DBPwd>{{ .Values.config.mysql.password }}</DBPwd>
+    	<MaxConnectNum>100</MaxConnectNum>
+    	<SingleDb>0</SingleDb>
+    	<NotExit>0</NotExit>
+    	<Robot>888888</Robot>
+    	<BackUpDay>10</BackUpDay>
+    </Config>
+  rcs.xml: |-
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <Config>
+        <Local>
+            <ECSIp>ecsip</ECSIp>
+            <ECSPort>ecsport</ECSPort>
+            <IndexCode>ryfserverid</IndexCode>
+            <LocalIp>0.0.0.0</LocalIp>
+            <CTRLPort>8994</CTRLPort>
+            <TaskPort>8989</TaskPort>
+            <PubPort>8990</PubPort>
+            <UdpTaskPort>8992</UdpTaskPort>
+            <siteId>10</siteId>
+            <warehouseCode>LWCNDG001</warehouseCode>
+            <BaseUrl>{{ .Values.config.ldm.base.endpoint }}/ldm/baseservice/services</BaseUrl>
+            <CoreUrl>{{ .Values.config.ldm.core.endpoint }}/ldm/coreservice/services</CoreUrl>
+        </Local>
+        <Robot>
+            <!-- 机器人通信端口 UDP-->
+            <RobotMsgPort>8988</RobotMsgPort>
+            <!-- 机器人资源端口 TCP-->
+            <RobotResPort>8702</RobotResPort>
+            <!-- 机器人请求服务端口-->
+            <RobotServicePort>8906</RobotServicePort>
+            <AlarmServerCode>1978f9d396ad413db89d82929aa2b485</AlarmServerCode>
+            <AlarmIp></AlarmIp>
+            <AlarmPort></AlarmPort>
+            <NTPIp>127.0.0.1</NTPIp>
+            <NTPPort>123</NTPPort>
+            <WareHouseRobot>
+                <StatusCycle>200</StatusCycle>
+                <AngleCycle>25</AngleCycle>
+                <DistanceCycle>500</DistanceCycle>
+            </WareHouseRobot>
+        </Robot>
+    </Config>

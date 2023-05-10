@@ -1,0 +1,28 @@
+image:
+  repository: swr.cn-south-1.myhuaweicloud.com/robo/ldm-base
+  tag: 1.0.0.20230401163135
+
+imagePullSecrets:
+  - name: default-secret
+
+resources:
+  limits:
+    cpu: 1
+    memory: 4Gi
+  requests:
+    cpu: 0.25
+    memory: 512Mi
+
+config:
+  server:
+    port: 60000
+  mysql:
+    host: 127.0.0.1
+    username: root
+    password: ""
+    port: 3306
+    db: ldm
+  redis:
+    host: redis-master
+    password: ""
+    port: 6379
