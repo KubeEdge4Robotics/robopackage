@@ -1,6 +1,6 @@
 global:
   imagePullSecrets: ["default-secret"]
-  storageClass: "csi-disk"
+  storageClass: "csi-disk-topology"
   redis:
     password: ""
 
