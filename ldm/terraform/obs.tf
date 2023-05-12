@@ -4,10 +4,11 @@ resource "huaweicloud_obs_bucket" "ldm_res" {
   acl    = "private"
 }
 
+// TODO 数据库结构+数据可以从事先创建的OBS桶里下载
 resource "huaweicloud_obs_bucket_object" "ldm_sql" {
   bucket = huaweicloud_obs_bucket.ldm_res.bucket
-  key    = "ldm.sql"
-  source = "./resources/ldm.sql"
+  key    = "ldm.sql.zip"
+  source = "./resources/ldm.sql.zip"
   acl    = "public-read"
 }
 

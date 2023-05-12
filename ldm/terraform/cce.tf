@@ -113,8 +113,9 @@ resource "huaweicloud_cce_node" "cce_ies_node" {
 
 // 创建云上CCE工作节点，用于执行初始化脚本
 resource "huaweicloud_cce_node" "init_node" {
-  // 等待resources目录下所有文件上传到OBS后，再创建此CCE节点
   depends_on = [
+    huaweicloud_cce_node.cce_ies_node,
+    // 等待resources目录下所有文件上传到OBS后，再创建此CCE节点
     huaweicloud_obs_bucket_object.ldm_sql,
     huaweicloud_obs_bucket_object.kube_config,
     huaweicloud_obs_bucket_object.post_install,
