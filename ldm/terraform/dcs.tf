@@ -8,7 +8,7 @@ data "huaweicloud_dcs_flavors" "dcs_flavors" {
 resource "random_password" "dcs_password" {
   length           = 12
   special          = true
-  override_special = "~!@#$^&*()-_=+|{}:,<.>/?"
+  override_special = "~!@#$^&-_=+"
   min_lower        = 1
   min_upper        = 1
   min_numeric      = 1

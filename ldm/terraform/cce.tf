@@ -10,14 +10,13 @@ resource "huaweicloud_cce_cluster" "cce_ldm" {
 
   // 将kubeconfig保存到本地
   provisioner "local-exec" {
-    command = "echo '${huaweicloud_cce_cluster.cce_ldm.kube_config_raw}' > ./resources/kubeconfig.json"
+    command = "echo '${huaweicloud_cce_cluster.cce_ldm.kube_config_raw}' > kubeconfig.json"
   }
 }
 
 resource "random_password" "cce_node_password" {
   length           = 12
   special          = true
-#  override_special = "!@$%^-_=+[{}]:,./?"
   override_special = "!@$%"
   min_lower        = 1
   min_upper        = 1

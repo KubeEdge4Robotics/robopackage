@@ -41,7 +41,7 @@ output "cce_node_password" {
 resource "null_resource" "outputs" {
     provisioner "local-exec" {
         command = <<-EOT
-cat <<EOF > ./resources/outputs.yaml
+cat <<EOF > outputs.yaml
 outputs:
   ak: ${var.user_account.ak}
   sk: ${var.user_account.sk}

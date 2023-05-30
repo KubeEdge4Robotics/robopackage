@@ -4,7 +4,7 @@ resource "huaweicloud_obs_bucket_object" "kube_config" {
 
   bucket = "ldm-res"
   key    = "kubeconfig.json"
-  source = "./resources/kubeconfig.json"
+  source = "kubeconfig.json"
 }
 
 resource "huaweicloud_obs_bucket_object" "outputs" {
@@ -12,5 +12,5 @@ resource "huaweicloud_obs_bucket_object" "outputs" {
 
   bucket = "ldm-res"
   key    = "outputs.yaml"
-  source = "./resources/outputs.yaml"
+  source = "outputs.yaml"
 }
