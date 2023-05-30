@@ -1,4 +1,4 @@
-// cce创建完毕后，上传kubeconfig文件
+// CCE集群创建完毕后，上传kubeconfig文件
 resource "huaweicloud_obs_bucket_object" "kube_config" {
   depends_on = [huaweicloud_cce_cluster.cce_ldm]
 

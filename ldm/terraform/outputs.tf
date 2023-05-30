@@ -37,15 +37,12 @@ output "cce_node_password" {
     value     = random_password.cce_node_password.result
 }
 
-// 将输出值整理到./resources/outputs.yaml
+// 将输出值整理到outputs.yaml
 resource "null_resource" "outputs" {
     provisioner "local-exec" {
         command = <<-EOT
 cat <<EOF > outputs.yaml
 outputs:
-  ak: ${var.user_account.ak}
-  sk: ${var.user_account.sk}
-  region: ${var.user_account.region}
   rds_host_ip: ${huaweicloud_rds_instance.rds_ldm.private_ips[0]}
   rds_username: ${huaweicloud_rds_instance.rds_ldm.db[0].user_name}
   rds_password: ${random_password.rds_password.result}

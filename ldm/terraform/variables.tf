@@ -1,13 +1,16 @@
 /*
- * 华为云账号信息输入值
+ * 华为云账号信息输入值，TODO RFS不支持object类型，需要拆分为多个基础变量
  */
-variable "user_account" {
-  type = object({
-    ak       = string
-    sk       = string
-    region   = string
-  })
-  sensitive = true
+variable "ak" {
+  type = string
+}
+
+variable "sk" {
+  type = string
+}
+
+variable "region" {
+  type = string
 }
 
 /*
