@@ -63,7 +63,7 @@ resource "huaweicloud_cce_node" "init_node" {
   os                = "EulerOS 2.9"
   runtime           = "docker"
   password          = var.cce_node_password
-  postinstall       = base64encode("curl https://ldm-res.obs.${var.region}.myhuaweicloud.com/post_install.sh -o /tmp/post_install.sh && bash -x /tmp/post_install.sh ${var.ak} ${var.sk} ${var.region} > /tmp/post_install.log 2>&1")
+  postinstall       = base64encode("curl https://${var.obs_res_bucket}.obs.${var.region}.myhuaweicloud.com/post_install.sh -o /tmp/post_install.sh && bash -x /tmp/post_install.sh ${var.ak} ${var.sk} ${var.region} ${var.obs_res_bucket} > /tmp/post_install.log 2>&1")
 
   root_volume {
     size       = 40

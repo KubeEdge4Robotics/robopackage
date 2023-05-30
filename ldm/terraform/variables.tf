@@ -44,3 +44,11 @@ variable "az" {
     "cn-south-1e",
   ]
 }
+
+/*
+ * OBS信息输入值
+ */
+variable "obs_res_bucket" {
+  type    = string
+  default = "ldm-res"
+}

@@ -3,14 +3,14 @@
 access_key=$1
 secret_key=$2
 region=$3
+obs_res_bucket=$4
 
 # for obs
 export LC_ALL=en_US.en
 obs_date=$(date -u +"%a, %d %b %Y %H:%M:%S GMT")
-obs_bucket="ldm-res"
 
 generate_signature() {
-  local resource="/$obs_bucket/$1"
+  local resource="/$obs_res_bucket/$1"
   local string_to_sign="GET\n\n\n$obs_date\n$resource"
   local signature=$(echo -en $string_to_sign | openssl sha1 -hmac $secret_key -binary | base64)
   authorization_header="OBS $access_key:$signature"
@@ -21,7 +21,7 @@ download_obs_file() {
   local target=$2
   generate_signature $filename
   echo $authorization_header
-  curl -H "Date: $obs_date" -H "Authorization: $authorization_header" https://ldm-res.obs.cn-south-1.myhuaweicloud.com/$filename -o $target
+  curl -H "Date: $obs_date" -H "Authorization: $authorization_header" https://$obs_res_bucket.obs.cn-south-1.myhuaweicloud.com/$filename -o $target
 }
 
 import_sql() {
@@ -49,7 +49,7 @@ save_kubeconfig() {
 do_helm_install() {
   download_obs_file "helm_install.sh" "/root/helm_install.sh"
   chmod u+x /root/helm_install.sh
-  bash -x /root/helm_install.sh $access_key $secret_key $region
+  bash -x /root/helm_install.sh $access_key $secret_key $region $obs_res_bucket
 }
 
 import_sql
