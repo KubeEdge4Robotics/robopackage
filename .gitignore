@@ -73,3 +73,5 @@ terraform.rc
 
 # App resources
 **/resources/*.tar.gz
+kubeconfig.json
+outputs.yaml

@@ -24,5 +24,6 @@ resource "huaweicloud_dcs_instance" "dcs_ldm" {
   password           = random_password.dcs_password.result
   vpc_id             = huaweicloud_vpc.vpc_ldm.id
   subnet_id          = huaweicloud_vpc_subnet.subnet_center.id
+  security_group_id  = huaweicloud_networking_secgroup.sg_rds_ldm.id // TODO 官方API不是必须参数
   availability_zones = [var.az[2], var.az[3]]
 }
