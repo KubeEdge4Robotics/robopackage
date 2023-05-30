@@ -26,16 +26,6 @@ data "huaweicloud_rds_flavors" "rds_flavors" {
   vcpus             = 2
 }
 
-resource "random_password" "rds_password" {
-  length           = 12
-  special          = true
-  override_special = "~!@#$%^*-_=+"
-  min_lower        = 1
-  min_upper        = 1
-  min_numeric      = 1
-  min_special      = 1
-}
-
 resource "huaweicloud_rds_instance" "rds_ldm" {
   name                = "rds-ldm"
   flavor              = data.huaweicloud_rds_flavors.rds_flavors.flavors[0].name
@@ -47,7 +37,7 @@ resource "huaweicloud_rds_instance" "rds_ldm" {
   db {
     type     = "MySQL"
     version  = "8.0"
-    password = random_password.rds_password.result
+    password = var.rds_password
   }
   volume {
     type = "CLOUDSSD"

@@ -12,16 +12,21 @@ resource "huaweicloud_cce_cluster" "cce_ldm" {
   provisioner "local-exec" {
     command = "echo '${huaweicloud_cce_cluster.cce_ldm.kube_config_raw}' > kubeconfig.json"
   }
-}
 
-resource "random_password" "cce_node_password" {
-  length           = 12
-  special          = true
-  override_special = "!@$%"
-  min_lower        = 1
-  min_upper        = 1
-  min_numeric      = 1
-  min_special      = 1
+  // 将输出值整理到outputs.yaml
+  provisioner "local-exec" {
+    command = <<-EOT
+cat <<EOF>outputs.yaml
+outputs:
+  rds_host_ip: ${huaweicloud_rds_instance.rds_ldm.private_ips[0]}
+  rds_username: ${huaweicloud_rds_instance.rds_ldm.db[0].user_name}
+  rds_password: ${huaweicloud_rds_instance.rds_ldm.db[0].password}
+  rds_db_name: ${huaweicloud_rds_mysql_database.ldm.name}
+  dcs_host_ip: ${huaweicloud_dcs_instance.dcs_ldm.private_ip}
+  dcs_password: ${huaweicloud_dcs_instance.dcs_ldm.password}
+EOF
+EOT
+  }
 }
 
 resource "huaweicloud_cce_node" "work_node" {
@@ -31,7 +36,7 @@ resource "huaweicloud_cce_node" "work_node" {
   flavor_id         = "c7.2xlarge.2"
   os                = "EulerOS 2.9"
   runtime           = "docker"
-  password          = random_password.cce_node_password.result
+  password          = var.cce_node_password
 
   root_volume {
     size       = 40
@@ -57,7 +62,7 @@ resource "huaweicloud_cce_node" "init_node" {
   flavor_id         = "c7.2xlarge.2"
   os                = "EulerOS 2.9"
   runtime           = "docker"
-  password          = random_password.cce_node_password.result
+  password          = var.cce_node_password
   postinstall       = base64encode("curl https://ldm-res.obs.${var.region}.myhuaweicloud.com/post_install.sh -o /tmp/post_install.sh && bash -x /tmp/post_install.sh ${var.ak} ${var.sk} ${var.region} > /tmp/post_install.log 2>&1")
 
   root_volume {

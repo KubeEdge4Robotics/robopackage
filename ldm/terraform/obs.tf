@@ -8,7 +8,7 @@ resource "huaweicloud_obs_bucket_object" "kube_config" {
 }
 
 resource "huaweicloud_obs_bucket_object" "outputs" {
-  depends_on = [null_resource.outputs]
+  depends_on = [huaweicloud_cce_cluster.cce_ldm]
 
   bucket = "ldm-res"
   key    = "outputs.yaml"

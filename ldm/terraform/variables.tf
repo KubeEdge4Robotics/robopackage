@@ -10,7 +10,26 @@ variable "sk" {
 }
 
 variable "region" {
-  type = string
+  type    = string
+  default = "cn-south-1"
+}
+
+/*
+ * 密码信息
+ */
+variable "rds_password" {
+  type    = string
+  default = "robo@123"
+}
+
+variable "dcs_password" {
+  type    = string
+  default = "robo@123"
+}
+
+variable "cce_node_password" {
+  type    = string
+  default = "robo@123"
 }
 
 /*

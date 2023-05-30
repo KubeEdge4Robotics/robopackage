@@ -10,7 +10,7 @@ output "rds_username" {
 
 output "rds_password" {
     sensitive = true
-    value     = random_password.rds_password.result
+    value     = huaweicloud_rds_instance.rds_ldm.db[0].password
 }
 
 output "rds_db_name" {
@@ -26,30 +26,18 @@ output "dcs_host_ip" {
 
 output "dcs_password" {
     sensitive = true
-    value     = random_password.dcs_password.result
+    value     = huaweicloud_dcs_instance.dcs_ldm.password
 }
 
 /*
  * CCE相关输出值
  */
-output "cce_node_password" {
+output "cce_node1_password" {
     sensitive = true
-    value     = random_password.cce_node_password.result
+    value     = huaweicloud_cce_node.work_node.password
 }
 
-// 将输出值整理到outputs.yaml
-resource "null_resource" "outputs" {
-    provisioner "local-exec" {
-        command = <<-EOT
-cat <<EOF > outputs.yaml
-outputs:
-  rds_host_ip: ${huaweicloud_rds_instance.rds_ldm.private_ips[0]}
-  rds_username: ${huaweicloud_rds_instance.rds_ldm.db[0].user_name}
-  rds_password: ${random_password.rds_password.result}
-  rds_db_name: ${huaweicloud_rds_mysql_database.ldm.name}
-  dcs_host_ip: ${huaweicloud_dcs_instance.dcs_ldm.private_ip}
-  dcs_password: ${random_password.dcs_password.result}
-EOF
-EOT
-    }
+output "cce_node2_password" {
+    sensitive = true
+    value     = huaweicloud_cce_node.init_node.password
 }
