@@ -14,6 +14,10 @@ variable "region" {
   default = "cn-south-1"
 }
 
+variable "enterprise_project_id" {
+  type = string
+}
+
 /*
  * 密码信息
  */

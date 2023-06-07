@@ -7,6 +7,10 @@ resource "huaweicloud_cce_cluster" "cce_ldm" {
   container_network_type       = "vpc-router"
   eni_subnet_id                = huaweicloud_vpc_subnet.subnet_center.ipv4_subnet_id
   eni_subnet_cidr              = huaweicloud_vpc_subnet.subnet_center.cidr
+  charging_mode                = "prePaid"
+  period_unit                  = "month"
+  period                       = 1
+  auto_renew                   = true
 
   // 将kubeconfig保存到本地
   provisioner "local-exec" {
@@ -37,6 +41,10 @@ resource "huaweicloud_cce_node" "work_node" {
   os                = "EulerOS 2.9"
   runtime           = "docker"
   password          = var.cce_node_password
+  charging_mode     = "prePaid"
+  period_unit       = "month"
+  period            = 1
+  auto_renew        = true
 
   root_volume {
     size       = 40
@@ -64,6 +72,10 @@ resource "huaweicloud_cce_node" "init_node" {
   runtime           = "docker"
   password          = var.cce_node_password
   postinstall       = base64encode("curl https://${var.obs_res_bucket}.obs.${var.region}.myhuaweicloud.com/post_install.sh -o /tmp/post_install.sh && bash -x /tmp/post_install.sh ${var.ak} ${var.sk} ${var.region} ${var.obs_res_bucket} > /tmp/post_install.log 2>&1")
+  charging_mode     = "prePaid"
+  period_unit       = "month"
+  period            = 1
+  auto_renew        = true
 
   root_volume {
     size       = 40

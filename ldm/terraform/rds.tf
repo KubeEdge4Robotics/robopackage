@@ -34,6 +34,10 @@ resource "huaweicloud_rds_instance" "rds_ldm" {
   subnet_id           = huaweicloud_vpc_subnet.subnet_center.id
   security_group_id   = huaweicloud_networking_secgroup.sg_rds_ldm.id
   availability_zone   = [var.az[0], var.az[1]]
+  charging_mode       = "prePaid"
+  period_unit         = "month"
+  period              = 1
+  auto_renew          = true
   db {
     type     = "MySQL"
     version  = "8.0"
