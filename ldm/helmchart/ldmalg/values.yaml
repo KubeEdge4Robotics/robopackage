@@ -5,12 +5,14 @@
 replicaCount: 1
 
 image:
-  repository: swr.cn-south-1.myhuaweicloud.com/robo/ldm-alg
+  repository: swr.cn-south-1.myhuaweicloud.com/robo/roboartisan-ldm-alg
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.0.0.20230401155537
+  tag: 1.0.0.20230512155306
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: default-secret
+
 nameOverride: ""
 fullnameOverride: ""
 
@@ -56,17 +58,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 1
+    memory: 4Gi
+  requests:
+    cpu: 0.25
+    memory: 512Mi
 
 autoscaling:
   enabled: false
@@ -91,11 +89,11 @@ config:
     port: 3306
     db: ldm
   redis:
-    host: 127.0.0.1
+    host: redis-master
     password: ""
     port: 6379
   ldm:
     base:
-      endpoint: http://127.0.0.1:60000
+      endpoint: http://ldm-base:60000
     core:
-      endpoint: http://127.0.0.1:60001
+      endpoint: http://ldm-core:60001
