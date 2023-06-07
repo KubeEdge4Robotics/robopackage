@@ -32,12 +32,7 @@ output "dcs_password" {
 /*
  * CCE相关输出值
  */
-output "cce_node1_password" {
+output "cce_node_password" {
     sensitive = true
-    value     = huaweicloud_cce_node.work_node.password
-}
-
-output "cce_node2_password" {
-    sensitive = true
-    value     = huaweicloud_cce_node.init_node.password
+    value     = huaweicloud_cce_node.cce_node[0].password
 }

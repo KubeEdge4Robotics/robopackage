@@ -58,4 +58,4 @@ resource "huaweicloud_rds_mysql_database" "ldm" {
   character_set = "utf8"
 }
 
-// TODO 数据库表的创建放在CCE工作节点创建完毕后，由CCE工作节点启动脚本完成
+// TODO 数据库表的创建放在CCE工作节点创建完毕后，由CCE启动ldm-init容器完成
