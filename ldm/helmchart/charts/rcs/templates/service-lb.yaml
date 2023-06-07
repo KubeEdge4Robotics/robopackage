@@ -13,8 +13,7 @@ metadata:
     kubernetes.io/elb.health-check-flag: 'off'
 spec:
   selector:
-    app.kubernetes.io/instance: ldm
-    app.kubernetes.io/name: rcs
+    {{- include "web.selectorLabels" . | nindent 4 }}
   externalTrafficPolicy: Cluster
   ports:
     - name: cce-service-0
