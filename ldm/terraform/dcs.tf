@@ -1,5 +1,5 @@
 data "huaweicloud_dcs_flavors" "dcs_flavors" {
-  capacity       = "4"
+  capacity       = "0.5"
   engine         = "Redis"
   engine_version = "5.0"
   cache_mode     = "ha"
