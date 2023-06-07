@@ -9,11 +9,11 @@ data:
     <Config>
     	<Encoding>UTF8</Encoding>
     	<DbType>database_type::DB_MYSQL_TYPE</DbType>
-    	<ServerIP>{{ .Values.config.mysql.host }}</ServerIP>
-    	<Port>{{ .Values.config.mysql.port }}</Port>
-    	<DbName>{{ .Values.config.mysql.db }}</DbName>
-    	<UserName>{{ .Values.config.mysql.username }}</UserName>
-    	<DBPwd>{{ .Values.config.mysql.password }}</DBPwd>
+    	<ServerIP>{{ .Values.global.config.mysql.host }}</ServerIP>
+    	<Port>{{ .Values.global.config.mysql.port }}</Port>
+    	<DbName>{{ .Values.global.config.mysql.db }}</DbName>
+    	<UserName>{{ .Values.global.config.mysql.username }}</UserName>
+    	<DBPwd>{{ .Values.global.config.mysql.password }}</DBPwd>
     	<MaxConnectNum>100</MaxConnectNum>
     	<SingleDb>0</SingleDb>
     	<NotExit>0</NotExit>
@@ -34,8 +34,8 @@ data:
             <UdpTaskPort>8992</UdpTaskPort>
             <siteId>10</siteId>
             <warehouseCode>LWCNDG001</warehouseCode>
-            <BaseUrl>{{ .Values.config.ldm.base.endpoint }}/ldm/baseservice/services</BaseUrl>
-            <CoreUrl>{{ .Values.config.ldm.core.endpoint }}/ldm/coreservice/services</CoreUrl>
+            <BaseUrl>{{ .Values.global.config.ldm.base.endpoint }}/ldm/baseservice/services</BaseUrl>
+            <CoreUrl>{{ .Values.global.config.ldm.core.endpoint }}/ldm/coreservice/services</CoreUrl>
         </Local>
         <Robot>
             <!-- 机器人通信端口 UDP-->

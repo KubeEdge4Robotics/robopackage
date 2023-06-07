@@ -1,0 +1,95 @@
+global:
+  imagePullSecrets:
+    - name: default-secret
+  config:
+    mysql:
+      host: 127.0.0.1
+      username: root
+      password: ""
+      port: 3306
+      db: ldm
+    redis:
+      host: 127.0.0.1
+      password: ""
+      port: 6379
+    ldm:
+      base:
+        endpoint: http://ldm-base:60000
+      core:
+        endpoint: http://ldm-core:60001
+      alg:
+        endpoint: http://ldm-alg:60002
+
+
+base:
+  config:
+    server:
+      port: 60000
+  image:
+    repository: swr.cn-south-1.myhuaweicloud.com/robo/roboartisan-ldm-base
+    pullPolicy: IfNotPresent
+    tag: 1.0.0.20230512155054
+  service:
+    type: NodePort
+    port: 60000
+  resources:
+    limits:
+      cpu: 1
+      memory: 4Gi
+    requests:
+      cpu: 0.25
+      memory: 512Mi
+
+
+core:
+  config:
+    server:
+      port: 60001
+    image:
+      repository: swr.cn-south-1.myhuaweicloud.com/robo/roboartisan-ldm-core
+      pullPolicy: IfNotPresent
+      tag: 1.0.0.20230512155200
+    service:
+      type: NodePort
+      port: 60001
+    resources:
+      limits:
+        cpu: 1
+        memory: 4Gi
+      requests:
+        cpu: 0.25
+        memory: 512Mi
+
+
+alg:
+  config:
+    server:
+      port: 60002
+  image:
+    repository: swr.cn-south-1.myhuaweicloud.com/robo/roboartisan-ldm-alg
+    pullPolicy: IfNotPresent
+    tag: 1.0.0.20230512155306
+  service:
+    type: NodePort
+    port: 60002
+  resources:
+    limits:
+      cpu: 1
+      memory: 4Gi
+    requests:
+      cpu: 0.25
+      memory: 512Mi
+
+
+rcs:
+  image:
+    repository: swr.cn-south-1.myhuaweicloud.com/robo/ldm-rcs
+    pullPolicy: IfNotPresent
+    tag: "202305101044"
+  resources:
+    limits:
+      cpu: 0.5
+      memory: 2Gi
+    requests:
+      cpu: 0.25
+      memory: 512Mi

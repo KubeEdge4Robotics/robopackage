@@ -39,7 +39,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 60002
 
 ingress:
@@ -82,18 +82,3 @@ affinity: {}
 config:
   server:
     port: 60002
-  mysql:
-    host: 127.0.0.1
-    username: root
-    password: ""
-    port: 3306
-    db: ldm
-  redis:
-    host: redis-master
-    password: ""
-    port: 6379
-  ldm:
-    base:
-      endpoint: http://ldm-base:60000
-    core:
-      endpoint: http://ldm-core:60001

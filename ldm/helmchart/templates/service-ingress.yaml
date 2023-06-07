@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/elb.port: '8090'
+    kubernetes.io/elb.class: performance
+    kubernetes.io/elb.autocreate: '{"name":"ldm-ingress","type":"public","bandwidth_name":"cce-bandwidth-1686146884894","bandwidth_chargemode":"traffic","bandwidth_size":5,"bandwidth_sharetype":"PER","eip_type":"5_sbgp","available_zone":["cn-south-1e"],"elb_virsubnet_ids":["2a7baec1-113e-4813-9b51-9f4a7dfcacc6"],"l7_flavor_name":"L7_flavor.elb.s1.small","l4_flavor_name":""}'
+spec:
+  rules:
+    - host: ''
+      http:
+        paths:
+          - path: /ldm/baseservice
+            backend:
+              service:
+                name: ldm-base
+                port:
+                  number: {{ .Values.base.config.server.port }}
+            property:
+              ingress.beta.kubernetes.io/url-match-mode: STARTS_WITH
+            pathType: ImplementationSpecific
+          - path: /ldm/coreservice/services
+            backend:
+              service:
+                name: ldm-core
+                port:
+                  number: {{ .Values.core.config.server.port }}
+            property:
+              ingress.beta.kubernetes.io/url-match-mode: STARTS_WITH
+            pathType: ImplementationSpecific
+  ingressClassName: cce

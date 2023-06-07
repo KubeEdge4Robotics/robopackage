@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-base
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "ldmcore.labels" . | nindent 4 }}
+    {{- include "ldmbase.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "ldmcore.selectorLabels" . | nindent 6 }}
+      {{- include "ldmbase.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,9 +19,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "ldmcore.selectorLabels" . | nindent 8 }}
+        {{- include "ldmbase.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -37,23 +37,19 @@ spec:
               protocol: TCP
           env:
             - name: SPRING_CONFIG_LOCATION
-              value: /home/service/roboartisan/conf/ldm-core.yml
+              value: /home/service/roboartisan/conf/ldm-base.yml
             - name: SERVICE_PORT
               value: "{{ .Values.config.server.port }}"
             - name: DATASOURCE_HOST
-              value: "{{ .Values.config.mysql.host }}"
+              value: "{{ .Values.global.config.mysql.host }}"
             - name: DATASOURCE_PORT
-              value: "{{ .Values.config.mysql.port }}"
+              value: "{{ .Values.global.config.mysql.port }}"
             - name: DATASOURCE_USERNAME
-              value: "{{ .Values.config.mysql.username }}"
+              value: "{{ .Values.global.config.mysql.username }}"
             - name: DATASOURCE_PASSWORD
-              value: "{{ .Values.config.mysql.password }}"
+              value: "{{ .Values.global.config.mysql.password }}"
             - name: DATASOURCE_NAME
-              value: "{{ .Values.config.mysql.db }}"
-            - name: LDMBASE_ENDPOINT
-              value: "{{ .Values.config.ldm.base.endpoint }}"
-            - name: LDMALG_ENDPOINT
-              value: "{{ .Values.config.ldm.alg.endpoint }}"
+              value: "{{ .Values.global.config.mysql.db }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -63,7 +59,7 @@ spec:
       volumes:
         - name: conf
           configMap:
-            name: ldm-core-config
+            name: ldm-base-config
             defaultMode: 420
       {{- with .Values.nodeSelector }}
       nodeSelector:

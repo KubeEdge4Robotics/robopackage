@@ -15,23 +15,20 @@ data:
         path: /api-docs
       swagger-ui:
         path: /swagger-ui.html
-    # Service stage
     spring:
       banner:
         location: classpath:banner.txt
-    #date format and time zone
       jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
       redis:
         database: 0
-        password: {{ .Values.config.redis.password }}
-        host: {{ .Values.config.redis.host }}
-        port: {{ .Values.config.redis.port }}
+        password: {{ .Values.global.config.redis.password }}
+        host: {{ .Values.global.config.redis.host }}
+        port: {{ .Values.global.config.redis.port }}
     mybatis:
       mapper-locations: classpath*:mapper/*.xml
     devspore:
-    # Devspore-datasource:Mysql configuration
       datasource:
         sources:
           ds0:
@@ -49,15 +46,26 @@ data:
           nodes:
             dc1:
               master: ds0
-    # PageHelper page parameter config
       page-helper:
         default-page-num: 1
         default-page-size: 20
         max-page-size: 100
         query-total-count: false
-    ## LDM config
     ldm:
       base:
         endpoint: ${LDMBASE_ENDPOINT:http://127.0.0.1:60000}
       alg:
         endpoint: ${LDMBASE_ENDPOINT:http://127.0.0.1:60002}
+    feign:
+      base:
+        name: base-server
+        url: ${LDMBASE_ENDPOINT:http://ldm-base:60000}/ldm/baseservice/services
+      alg:
+        name: alg-server
+        url: ${LDMALG_ENDPOINT:http://ldm-alg:60002}/ldm/algservice/services
+    
+    ## 测试监控客户端写死用户名密码
+    user:
+      account: testuser
+      tenantId: -1
+      userId: 167738066820096

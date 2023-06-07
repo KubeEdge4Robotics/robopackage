@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-rcs-lb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/instance: ldm
+    app.kubernetes.io/name: rcs
+  annotations:
+    kubernetes.io/elb.class: performance
+    kubernetes.io/elb.autocreate: '{"name":"ldm-rcs-elb","type":"public","bandwidth_name":"cce-bandwidth-1686146781859","bandwidth_chargemode":"traffic","bandwidth_size":5,"bandwidth_sharetype":"PER","eip_type":"5_sbgp","available_zone":["cn-south-1c"],"elb_virsubnet_ids":["2a7baec1-113e-4813-9b51-9f4a7dfcacc6"],"l7_flavor_name":"","l4_flavor_name":"L4_flavor.elb.s1.small"}'
+    kubernetes.io/elb.lb-algorithm: ROUND_ROBIN
+    kubernetes.io/elb.health-check-flag: 'off'
+spec:
+  selector:
+    app.kubernetes.io/instance: ldm
+    app.kubernetes.io/name: rcs
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: cce-service-0
+      targetPort: 8906
+      nodePort: 0
+      port: 8906
+      protocol: TCP
+    - name: cce-service-1
+      targetPort: 8989
+      nodePort: 0
+      port: 8989
+      protocol: TCP
+    - name: cce-service-2
+      targetPort: 8702
+      nodePort: 0
+      port: 8702
+      protocol: TCP
+    - name: cce-service-3
+      targetPort: 8990
+      nodePort: 0
+      port: 8990
+      protocol: TCP
+    - name: cce-service-4
+      targetPort: 8994
+      nodePort: 0
+      port: 8994
+      protocol: TCP
+    - name: cce-service-5
+      targetPort: 8988
+      nodePort: 0
+      port: 8988
+      protocol: UDP
+    - name: cce-service-6
+      targetPort: 8992
+      nodePort: 0
+      port: 8992
+      protocol: UDP
+    - name: cce-service-7
+      targetPort: 8993
+      nodePort: 0
+      port: 8993
+      protocol: UDP
+    - name: cce-service-8
+      targetPort: 35354
+      nodePort: 0
+      port: 35354
+      protocol: UDP
+  type: LoadBalancer

@@ -1,14 +1,14 @@
-# Default values for ldmbase.
+# Default values for ldmcore.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: swr.cn-south-1.myhuaweicloud.com/robo/roboartisan-ldm-base
+  repository: swr.cn-south-1.myhuaweicloud.com/robo/roboartisan-ldm-core
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.0.0.20230512155054
+  tag: 1.0.0.20230512155200
 
 imagePullSecrets:
   - name: default-secret
@@ -39,15 +39,15 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 60000
+  type: NodePort
+  port: 60001
 
 ingress:
   enabled: false
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
       paths:
@@ -81,7 +81,7 @@ affinity: {}
 
 config:
   server:
-    port: 60000
+    port: 60001
   mysql:
     host: 127.0.0.1
     username: root
@@ -92,3 +92,8 @@ config:
     host: redis-master
     password: ""
     port: 6379
+  ldm:
+    base:
+      endpoint: http://ldm-base:60000
+    alg:
+      endpoint: http://ldm-alg:60002

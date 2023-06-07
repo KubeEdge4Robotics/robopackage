@@ -1,34 +1,35 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: ldm-base-config
+  name: ldm-alg-config
   namespace: {{ .Release.Namespace }}
 data:
-  ldm-base.yml: |-
+  ldm-alg.yml: |-
     server:
-      port: ${SERVICE_PORT:60000}
+      port: ${SERVICE_PORT:60002}
       servlet:
-        context-path: /ldm/baseservice/services
+        context-path: /ldm/algservice/services
     springdoc:
       api-docs:
         enabled: false
         path: /api-docs
       swagger-ui:
         path: /swagger-ui.html
+    # Service stage
     spring:
-      banner:
-        location: classpath:banner.txt
+      #date format and time zone
       jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
       redis:
         database: 0
-        password: {{ .Values.config.redis.password }}
-        host: {{ .Values.config.redis.host }}
-        port: {{ .Values.config.redis.port }}
+        password: {{ .Values.global.config.redis.password }}
+        host: {{ .Values.global.config.redis.host }}
+        port: {{ .Values.global.config.redis.port }}
     mybatis:
       mapper-locations: classpath*:mapper/*.xml
     devspore:
+      # Devspore-datasource:Mysql configuration
       datasource:
         sources:
           ds0:
@@ -46,8 +47,18 @@ data:
           nodes:
             dc1:
               master: ds0
+      # PageHelper page parameter config
       page-helper:
         default-page-num: 1
         default-page-size: 20
         max-page-size: 100
         query-total-count: false
+
+    application:
+      env: DEV
+      name: SAMS
+    ldm:
+      base:
+        endpoint: ${LDMBASE_ENDPOINT:http://127.0.0.1:60000}
+      core:
+        endpoint: ${LDMCORE_ENDPOINT:http://127.0.0.1:60001}
