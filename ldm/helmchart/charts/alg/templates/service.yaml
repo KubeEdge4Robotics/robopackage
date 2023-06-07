@@ -4,7 +4,7 @@ metadata:
   name: ldm-alg
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "ldmalg.labels" . | nindent 4 }}
+    {{- include "alg.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "ldmalg.selectorLabels" . | nindent 4 }}
+    {{- include "alg.selectorLabels" . | nindent 4 }}

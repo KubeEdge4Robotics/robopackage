@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ldm-base
+  name: ldm-web
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "base.labels" . | nindent 4 }}
+    {{- include "web.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "base.selectorLabels" . | nindent 4 }}
+    {{- include "web.selectorLabels" . | nindent 4 }}

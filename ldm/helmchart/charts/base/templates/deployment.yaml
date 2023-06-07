@@ -4,14 +4,14 @@ metadata:
   name: {{ .Release.Name }}-base
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "ldmbase.labels" . | nindent 4 }}
+    {{- include "base.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "ldmbase.selectorLabels" . | nindent 6 }}
+      {{- include "base.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "ldmbase.selectorLabels" . | nindent 8 }}
+        {{- include "base.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:

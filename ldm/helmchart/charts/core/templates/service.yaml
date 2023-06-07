@@ -4,7 +4,7 @@ metadata:
   name: ldm-core
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "ldmcore.labels" . | nindent 4 }}
+    {{- include "core.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "ldmcore.selectorLabels" . | nindent 4 }}
+    {{- include "core.selectorLabels" . | nindent 4 }}

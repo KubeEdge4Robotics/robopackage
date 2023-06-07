@@ -4,14 +4,14 @@ metadata:
   name: {{ .Release.Name }}-core
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "ldmcore.labels" . | nindent 4 }}
+    {{- include "core.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "ldmcore.selectorLabels" . | nindent 6 }}
+      {{- include "core.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "ldmcore.selectorLabels" . | nindent 8 }}
+        {{- include "core.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:

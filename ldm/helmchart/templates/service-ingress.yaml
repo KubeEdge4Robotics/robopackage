@@ -12,6 +12,15 @@ spec:
     - host: ''
       http:
         paths:
+          - path: /
+            backend:
+              service:
+                name: ldm-web
+                port:
+                  number: {{ .Values.web.service.port }}
+            property:
+              ingress.beta.kubernetes.io/url-match-mode: STARTS_WITH
+            pathType: ImplementationSpecific
           - path: /ldm/baseservice
             backend:
               service:
