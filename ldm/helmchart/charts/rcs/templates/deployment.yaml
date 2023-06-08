@@ -42,8 +42,6 @@ spec:
               readOnly: true
               mountPath: /home/rcs.xml
               subPath: rcs.xml
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       volumes:
         - name: conf
           configMap:

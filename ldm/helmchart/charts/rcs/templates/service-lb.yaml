@@ -56,9 +56,4 @@ spec:
       nodePort: 0
       port: 8993
       protocol: UDP
-    - name: cce-service-8
-      targetPort: 35354
-      nodePort: 0
-      port: 35354
-      protocol: UDP
   type: LoadBalancer
