@@ -1,6 +1,11 @@
 apiVersion: v2
 name: ldm
-description: A Helm chart for Kubernetes
+description: LDM物流机器人自动化系统，支持边云智能联动、调度和编排AGV/无人车/机器人
+annotations:
+  categories: Robot
+  industries: 边缘计算
+  architecture: x86_64
+  scenes: Cloud,Edge
 
 # A chart can be either an 'application' or a 'library' chart.
 #
